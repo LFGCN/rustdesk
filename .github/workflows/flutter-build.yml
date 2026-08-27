@@ -126,6 +126,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Restore bridge files
@@ -425,6 +429,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Install LLVM and Clang
@@ -586,6 +594,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Install flutter
@@ -721,6 +733,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Import the codesign cert
@@ -1044,6 +1060,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Install flutter
@@ -1326,6 +1346,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Install flutter
@@ -1501,6 +1525,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Set Swap Space
@@ -1841,6 +1869,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Modify vcpkg.json for armv7
@@ -2053,6 +2085,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Download Binary
@@ -2137,6 +2173,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Download Binary
@@ -2208,6 +2248,10 @@ jobs:
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
           t=t.replace('OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=','TT4A28var5o9r5IHQ5wxLzX0bUEHsEYEaVnJzJ3wuIE=')
           open(f,'w').write(t)
+          g='src/common.rs'
+          t=open(g).read()
+          t=t.replace('"https://admin.rustdesk.com".to_owned()','"http://aly.low.bot.cd:21114".to_owned()')
+          open(g,'w').write(t)
           "
 
       - name: Prepare env
