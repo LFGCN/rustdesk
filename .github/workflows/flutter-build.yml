@@ -119,8 +119,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -422,8 +423,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -587,8 +589,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -726,8 +729,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -1053,8 +1057,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -1339,8 +1344,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -1518,8 +1524,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -1862,8 +1869,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -2078,8 +2086,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -2166,8 +2175,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
@@ -2241,8 +2251,9 @@ jobs:
           submodules: recursive
 
       - name: Patch custom server config
+        shell: bash
         run: |
-          python3 -c "
+          PY="$(command -v python3 || command -v python)"; "$PY" -c "
           f='libs/hbb_common/src/config.rs'
           t=open(f).read()
           t=t.replace('rs-ny.rustdesk.com','aly.low.bot.cd')
