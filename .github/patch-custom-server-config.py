@@ -20,7 +20,7 @@ CONFIG_REPLACEMENTS = [
 API_REPLACEMENTS = [
     (
         '"https://admin.rustdesk.com".to_owned()',
-        '"http://aly.low.bot.cd:21114".to_owned()',
+        '"http://47.108.238.50:21114".to_owned()',
     ),
 ]
 
