@@ -32,13 +32,15 @@ jobs:
           git fetch upstream refs/tags/1.5.0 --no-tags
           git tag upstream-1.5.0 FETCH_HEAD
 
-      - name: Merge upstream 1.5.0 (keep our .github)
+      - name: Merge upstream 1.5.0 (keep our .github byte-exact)
         run: |
           set -e
           OUT=$(git merge upstream-1.5.0 --no-commit 2>&1) || true
           if echo "$OUT" | grep -q 'Already up to date'; then
             echo 'already merged'
           else
+            git rm -r -q --cached .github >/dev/null 2>&1 || true
+            rm -rf .github
             git checkout HEAD -- .github
             git checkout --theirs -- Cargo.toml Cargo.lock || true
             git add -A
@@ -49,6 +51,13 @@ jobs:
               exit 1
             fi
             git commit -m "Merge upstream 1.5.0 into master (keep .github)"
+            if git diff --quiet HEAD -- .github; then
+              echo '.github identical to pre-merge state'
+            else
+              echo '::error::.github still differs from pre-merge state'
+              git diff --name-only HEAD -- .github
+              exit 1
+            fi
           fi
           git log -1 --format='HEAD: %H %s'
 
