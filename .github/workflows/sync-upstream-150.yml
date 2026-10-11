@@ -61,10 +61,17 @@ jobs:
           grep -qF '"https://admin.rustdesk.com".to_owned()' src/common.rs
           echo 'all patch patterns present'
 
-      - name: Push master
+      - name: Push master (with diagnostics)
         run: |
           set -e
-          git push origin HEAD:master
+          git remote -v
+          if ! OUT=$(git push origin HEAD:master 2>&1); then
+            echo "$OUT"
+            FLAT=$(echo "$OUT" | tr '\n' '|')
+            echo "::error::PUSH FAILED: $FLAT"
+            exit 1
+          fi
+          echo "$OUT"
           echo 'master pushed'
 
       - name: Tag v1.5.0-1 only when 1.5.0 build workflow is adopted
@@ -79,5 +86,11 @@ jobs:
             exit 0
           fi
           git tag v1.5.0-1
-          git push origin v1.5.0-1
+          if ! OUT=$(git push origin v1.5.0-1 2>&1); then
+            echo "$OUT"
+            FLAT=$(echo "$OUT" | tr '\n' '|')
+            echo "::error::TAG PUSH FAILED: $FLAT"
+            exit 1
+          fi
+          echo "$OUT"
           echo 'tag pushed, release build triggered'
