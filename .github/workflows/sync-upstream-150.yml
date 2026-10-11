@@ -1,0 +1,83 @@
+name: Sync upstream 1.5.0 into master
+
+on:
+  push:
+    paths:
+      - '.github/workflows/sync-upstream-150.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  merge-upstream:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout master (full history)
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "LFGCN"
+          git config user.email "198198842+LFGCN@users.noreply.github.com"
+
+      - name: Fetch upstream 1.5.0
+        run: |
+          git remote add upstream https://github.com/rustdesk/rustdesk.git
+          git fetch upstream refs/tags/1.5.0 --no-tags
+          git tag upstream-1.5.0 FETCH_HEAD
+
+      - name: Merge upstream 1.5.0
+        run: |
+          set -e
+          if git merge upstream-1.5.0 --no-edit; then
+            echo "clean merge"
+          else
+            echo "conflicts: keeping ours for .github, theirs for Cargo.toml/Cargo.lock"
+            git checkout --ours -- .github || true
+            git checkout --theirs -- Cargo.toml Cargo.lock || true
+            git add -A
+            UNRESOLVED=$(git diff --name-only --diff-filter=U)
+            if [ -n "$UNRESOLVED" ]; then
+              echo "::error::Unresolved conflicts:"
+              echo "$UNRESOLVED"
+              exit 1
+            fi
+            git commit --no-edit
+          fi
+          git log -1 --format='merged: %H %s'
+
+      - name: Adopt upstream 1.5.0 build workflow with patch steps
+        run: |
+          set -e
+          python3 .github/insert-patch-steps.py upstream-1.5.0
+          grep -c 'Patch custom server config' .github/workflows/flutter-build.yml
+          git add .github/workflows/flutter-build.yml
+          git commit -m "ci: adopt upstream 1.5.0 flutter-build workflow with custom patch steps"
+
+      - name: Verify patch patterns still present
+        run: |
+          set -e
+          git submodule update --init libs/hbb_common
+          grep -qF 'rs-ny.rustdesk.com' libs/hbb_common/src/config.rs
+          grep -qF 'OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=' libs/hbb_common/src/config.rs
+          grep -qF '"https://admin.rustdesk.com".to_owned()' src/common.rs
+          echo 'all patch patterns present'
+
+      - name: Push master (best effort)
+        run: |
+          git push origin HEAD:master || echo '::warning::master push rejected, tag will still be pushed'
+
+      - name: Tag v1.5.0-1 to trigger release build
+        run: |
+          set -e
+          if git ls-remote --exit-code origin refs/tags/v1.5.0-1 >/dev/null 2>&1; then
+            echo 'tag v1.5.0-1 already exists, skip'
+          else
+            git tag v1.5.0-1
+            git push origin v1.5.0-1
+          fi
