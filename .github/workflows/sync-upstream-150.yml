@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/sync-upstream-150.yml'
+      - '.github/workflows/flutter-build.yml'
   workflow_dispatch:
 
 permissions:
@@ -31,14 +32,14 @@ jobs:
           git fetch upstream refs/tags/1.5.0 --no-tags
           git tag upstream-1.5.0 FETCH_HEAD
 
-      - name: Merge upstream 1.5.0
+      - name: Merge upstream 1.5.0 (keep our .github)
         run: |
           set -e
-          if git merge upstream-1.5.0 --no-edit; then
-            echo "clean merge"
+          OUT=$(git merge upstream-1.5.0 --no-commit 2>&1) || true
+          if echo "$OUT" | grep -q 'Already up to date'; then
+            echo 'already merged'
           else
-            echo "conflicts: keeping ours for .github, theirs for Cargo.toml/Cargo.lock"
-            git checkout --ours -- .github || true
+            git checkout HEAD -- .github
             git checkout --theirs -- Cargo.toml Cargo.lock || true
             git add -A
             UNRESOLVED=$(git diff --name-only --diff-filter=U)
@@ -47,17 +48,9 @@ jobs:
               echo "$UNRESOLVED"
               exit 1
             fi
-            git commit --no-edit
+            git commit -m "Merge upstream 1.5.0 into master (keep .github)"
           fi
-          git log -1 --format='merged: %H %s'
-
-      - name: Adopt upstream 1.5.0 build workflow with patch steps
-        run: |
-          set -e
-          python3 .github/insert-patch-steps.py upstream-1.5.0
-          grep -c 'Patch custom server config' .github/workflows/flutter-build.yml
-          git add .github/workflows/flutter-build.yml
-          git commit -m "ci: adopt upstream 1.5.0 flutter-build workflow with custom patch steps"
+          git log -1 --format='HEAD: %H %s'
 
       - name: Verify patch patterns still present
         run: |
@@ -68,16 +61,23 @@ jobs:
           grep -qF '"https://admin.rustdesk.com".to_owned()' src/common.rs
           echo 'all patch patterns present'
 
-      - name: Push master (best effort)
-        run: |
-          git push origin HEAD:master || echo '::warning::master push rejected, tag will still be pushed'
-
-      - name: Tag v1.5.0-1 to trigger release build
+      - name: Push master
         run: |
           set -e
+          git push origin HEAD:master
+          echo 'master pushed'
+
+      - name: Tag v1.5.0-1 only when 1.5.0 build workflow is adopted
+        run: |
+          set -e
+          if ! grep -q 'build-rustdesk-linux-drm' .github/workflows/flutter-build.yml; then
+            echo 'flutter-build.yml is not the adopted 1.5.0 version yet, skip tagging'
+            exit 0
+          fi
           if git ls-remote --exit-code origin refs/tags/v1.5.0-1 >/dev/null 2>&1; then
             echo 'tag v1.5.0-1 already exists, skip'
-          else
-            git tag v1.5.0-1
-            git push origin v1.5.0-1
+            exit 0
           fi
+          git tag v1.5.0-1
+          git push origin v1.5.0-1
+          echo 'tag pushed, release build triggered'
