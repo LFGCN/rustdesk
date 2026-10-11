@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/sync-upstream-150.yml'
+      - '.github/workflows/flutter-build.yml'
   workflow_dispatch:
 
 permissions:
@@ -51,14 +52,6 @@ jobs:
           fi
           git log -1 --format='HEAD: %H %s'
 
-      - name: Adopt upstream 1.5.0 build workflow with patch steps
-        run: |
-          set -e
-          python3 .github/insert-patch-steps.py upstream-1.5.0
-          grep -c 'Patch custom server config' .github/workflows/flutter-build.yml
-          git add .github/workflows/flutter-build.yml
-          git diff --cached --quiet || git commit -m "ci: adopt upstream 1.5.0 flutter-build workflow with custom patch steps"
-
       - name: Verify patch patterns still present
         run: |
           set -e
@@ -80,11 +73,11 @@ jobs:
           echo "$OUT"
           echo 'master pushed'
 
-      - name: Tag v1.5.0-1 to trigger release build
+      - name: Tag v1.5.0-1 only when 1.5.0 build workflow is adopted
         run: |
           set -e
           if ! grep -q 'build-rustdesk-linux-drm' .github/workflows/flutter-build.yml; then
-            echo 'flutter-build.yml adoption missing, skip tagging'
+            echo 'flutter-build.yml is not the adopted 1.5.0 version yet, skip tagging'
             exit 0
           fi
           if git ls-remote --exit-code --refs origin refs/tags/v1.5.0-1 >/dev/null 2>&1; then
