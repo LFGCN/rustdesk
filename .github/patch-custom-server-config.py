@@ -40,7 +40,30 @@ def patch(rel_path, pairs):
     return ok
 
 
+def append_option(rel_path, anchor, new_line):
+    """After the anchor line, insert new_line if it's not already present."""
+    path = ROOT / rel_path
+    text = path.read_text(encoding="utf-8")
+    if new_line.strip() in text:
+        print(f"[skip   ] {rel_path}: already contains {new_line.strip()!r}")
+        return True
+    if anchor not in text:
+        print(f"[warn   ] {rel_path}: anchor NOT found: {anchor!r}")
+        return False
+    text = text.replace(anchor, anchor + "\n    " + new_line.strip(), 1)
+    path.write_text(text, encoding="utf-8")
+    print(f"[patched] {rel_path}: inserted {new_line.strip()!r} after anchor")
+    return True
+
+
 status = True
 status &= patch("libs/hbb_common/src/config.rs", CONFIG_REPLACEMENTS)
 status &= patch("src/common.rs", API_REPLACEMENTS)
+# Upstream 1.5.1 bug: libs/base/src/config/keys.rs references OPTION_WEBSOCKET_PORT
+# but hbb_common never defines it. Add it here so the build succeeds.
+status &= append_option(
+    "libs/hbb_common/src/config.rs",
+    'pub const OPTION_ALLOW_WEBSOCKET: &str = "allow-websocket";',
+    'pub const OPTION_WEBSOCKET_PORT: &str = "websocket-port";',
+)
 sys.exit(0 if status else 1)
